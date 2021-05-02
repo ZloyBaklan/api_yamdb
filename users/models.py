@@ -2,8 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .managers import CustomUserManager
-
 
 class CustomUser(AbstractUser):
 
@@ -31,13 +29,12 @@ class CustomUser(AbstractUser):
     )
     confirmation_code = models.CharField(max_length=10, default='0000000000')
 
-    objects = CustomUserManager()
-
     class Meta:
         ordering = ['id']
 
     def __str__(self):
         return self.email
 
+    @property
     def is_upperclass(self):
         return self.role in (self.UserRoles.MODERATOR, self.UserRoles.ADMIN)

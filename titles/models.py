@@ -1,5 +1,9 @@
-from django.core.validators import MaxValueValidator, MinValueValidator
+import datetime
+
+from django.core.validators import MaxValueValidator
 from django.db import models
+
+CURRENT_DATETIME = datetime.datetime.now()
 
 
 class Category(models.Model):
@@ -22,7 +26,7 @@ class Title(models.Model):
     name = models.CharField(max_length=200, db_index=True)
     year = models.PositiveSmallIntegerField(
         db_index=True,
-        validators=[MinValueValidator(1700), MaxValueValidator(2100)]
+        validators=[MaxValueValidator(int(CURRENT_DATETIME.year))]
     )
     category = models.ForeignKey(
         Category,
